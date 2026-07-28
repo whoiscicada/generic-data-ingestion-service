@@ -14,6 +14,13 @@ def get_database_url() -> str:
     url = os.environ.get("DATABASE_URL")
     if not url:
         raise RuntimeError("DATABASE_URL is not set (expected to come from docker-compose environment)")
+    # Managed Postgres providers (Render, Heroku-style) hand back a bare
+    # postgres:// or postgresql:// URL; normalize to the asyncpg dialect
+    # this app actually uses, so the same env var works in both places.
+    if url.startswith("postgres://"):
+        url = "postgresql+asyncpg://" + url[len("postgres://") :]
+    elif url.startswith("postgresql://"):
+        url = "postgresql+asyncpg://" + url[len("postgresql://") :]
     return url
 
 
