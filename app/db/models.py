@@ -16,7 +16,7 @@ from __future__ import annotations
 import uuid
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, UniqueConstraint, func
+from sqlalchemy import DateTime, Integer, String, UniqueConstraint, func
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
@@ -48,9 +48,11 @@ class RawRecord(Base):
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     source_id: Mapped[str] = mapped_column(String, nullable=False)
     record_id: Mapped[str] = mapped_column(String, nullable=False)
-    run_id: Mapped[uuid.UUID | None] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("job_runs.id"), nullable=True
-    )
+    # Deliberately not a FK to job_runs.id: raw_records' lifecycle is
+    # independent of job run history (pruning old job_runs rows must not
+    # cascade into deleting ingested data). This is just "last run that
+    # touched this record" metadata.
+    run_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), nullable=True)
     raw_payload: Mapped[dict] = mapped_column(JSONB, nullable=False)
     first_seen_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     last_seen_at: Mapped[datetime] = mapped_column(
