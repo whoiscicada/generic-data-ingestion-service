@@ -4,6 +4,8 @@ respx-mocked HTTP for the source itself (no real network in unit tests).
 
 from __future__ import annotations
 
+import uuid
+
 import httpx
 import pytest
 import respx
@@ -94,16 +96,21 @@ async def test_run_is_idempotent_per_trigger_key(session_factory):
         return_value=httpx.Response(200, json={"info": {"next": None}, "results": [{"id": 1}]})
     )
 
+    # Unique per test invocation: the DB fixture deliberately doesn't wipe
+    # tables between runs (see conftest.py), so a fixed trigger_key would
+    # collide with a row from a previous run and short-circuit before the
+    # route is ever called, rather than actually exercising idempotency.
+    trigger_key = f"daily-{uuid.uuid4()}"
     source_config = _source_config(source_id="job_idempotent_source")
     sink = DatabaseSink(session_factory)
 
     job1 = IngestionJob(
-        source_config=source_config, sinks=[sink], session_factory=session_factory, trigger_key="daily-2026-07-28"
+        source_config=source_config, sinks=[sink], session_factory=session_factory, trigger_key=trigger_key
     )
     run_id_1 = await job1.run()
 
     job2 = IngestionJob(
-        source_config=source_config, sinks=[sink], session_factory=session_factory, trigger_key="daily-2026-07-28"
+        source_config=source_config, sinks=[sink], session_factory=session_factory, trigger_key=trigger_key
     )
     run_id_2 = await job2.run()
 
