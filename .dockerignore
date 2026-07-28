@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.git/
+.github/
+tests/
+CLAUDE.md
+*.md
+.env
+manual_test*.py

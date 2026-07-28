@@ -130,7 +130,12 @@ class Fetcher:
                     authed.method,
                     authed.url,
                     headers=authed.headers,
-                    params=authed.params,
+                    # httpx strips a URL's own embedded query string when
+                    # params={} is passed explicitly (unlike params=None,
+                    # which leaves it alone) -- fatal for pagination styles
+                    # like next-url-in-body/link-header, whose "next" URL
+                    # already carries its own query string.
+                    params=authed.params or None,
                     json=authed.json_body,
                     timeout=self.source_config.timeout_seconds,
                 )
