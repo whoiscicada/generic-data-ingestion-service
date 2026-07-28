@@ -2,6 +2,8 @@
 
 A config-driven service that pulls data out of *any* external API and persists it durably, without being written for that one API. A source is described by a YAML config (base URL, auth style, pagination style, response shape); a generic engine reads that config to fetch, paginate, and persist the data. Adding a new source means writing a new config file, not new application code — unless the source introduces a genuinely new auth or pagination *style*, in which case only one small, isolated strategy class is needed.
 
+**Live hosted endpoint:** https://generic-data-ingestion-service.onrender.com ([`/healthz`](https://generic-data-ingestion-service.onrender.com/healthz), [`/docs`](https://generic-data-ingestion-service.onrender.com/docs), [`/runs`](https://generic-data-ingestion-service.onrender.com/runs)). Deployed from [`render.yaml`](render.yaml) (free-tier web service + managed Postgres). Both demo sources have been run against it directly and land in its Postgres exactly as they do locally (42 pages / 826 records for Rick and Morty; 18 pages / 1800 records for GitHub issues) — see [How to run it](#how-to-run-it) below for the equivalent local commands against `docker compose up`, which remains the primary supported way to run this.
+
 ## How to run it
 
 The only supported way to run this project is `docker compose up` — there is no SQLite fallback and no "just run it with a local venv" path; Postgres is always supplied by compose, for local dev, tests, and the demo alike.
@@ -109,6 +111,7 @@ SourceConfig (YAML, Pydantic-validated)
 - **Partial-failure isolation is page-level, not record-level.** If a page exhausts its retries, the run stops paginating further (there's no way to know the next cursor without a successful response) but keeps whatever pages already landed and marks the run `partial_success`. This is "basic" depth per the brief, not a full dead-letter/replay subsystem.
 - **S3Sink is a stub, not a real integration.** It proves the `Sink` ABC is genuinely pluggable; it deliberately does not touch real S3/MinIO, per the time-box call in the brief.
 - **GitHub demo repo (`encode/httpx`) was swapped from the originally-proposed `microsoft/vscode`** because `state=all` on vscode is 100k+ issues — real pagination, but not a demo you'd want to sit through.
+- **The Render free-tier instance spins down after inactivity** and takes a short while to cold-start on the next request. This is a hosting-tier characteristic, not an application bug; `docker compose up` remains the primary, always-warm way to run and evaluate this.
 - **Config validation is fail-fast and unforgiving.** An invalid `SourceConfig` (missing required auth/pagination fields, bad backoff bounds, etc.) raises a clear Pydantic validation error at load time, not a confusing failure mid-run.
 
 ## What I would do with more time
