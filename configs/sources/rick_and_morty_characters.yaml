@@ -1,0 +1,28 @@
+# Demo source #1: no auth, pagination via a full "next page" URL embedded
+# in the response body (info.next). See CLAUDE.md Section 6.
+source_id: rick_and_morty_characters
+base_url: https://rickandmortyapi.com/api
+endpoint:
+  path: /character
+  method: GET
+  static_params: {}
+auth:
+  type: none
+pagination:
+  type: next_url_in_body
+  config:
+    next_url_json_path: info.next
+    records_json_path: results
+response:
+  record_id_field: id
+  raw_storage: true
+rate_limit:
+  requests_per_second: 5
+  burst: 10
+retry:
+  max_attempts: 5
+  backoff_base_seconds: 1
+  backoff_max_seconds: 30
+timeout_seconds: 15
+destination:
+  sinks: [database]

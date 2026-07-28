@@ -1,0 +1,36 @@
+# Demo source #2: bearer-token auth, pagination via the RFC 5988 HTTP
+# Link header. Structurally different from demo source #1 in both auth
+# style and pagination mechanism (CLAUDE.md Section 6).
+#
+# GITHUB_TOKEN is substituted from the environment at load time (see
+# .env.example) -- a plain scopeless personal access token is enough for
+# reading public issues at the higher 5000 req/hr authenticated rate limit.
+source_id: github_issues
+base_url: https://api.github.com
+endpoint:
+  path: /repos/microsoft/vscode/issues
+  method: GET
+  static_params:
+    state: all
+    per_page: 10
+auth:
+  type: bearer_token
+  config:
+    token: "${GITHUB_TOKEN}"
+pagination:
+  type: link_header
+  config:
+    records_json_path: "$"
+response:
+  record_id_field: id
+  raw_storage: true
+rate_limit:
+  requests_per_second: 2
+  burst: 4
+retry:
+  max_attempts: 5
+  backoff_base_seconds: 1
+  backoff_max_seconds: 30
+timeout_seconds: 15
+destination:
+  sinks: [database]
