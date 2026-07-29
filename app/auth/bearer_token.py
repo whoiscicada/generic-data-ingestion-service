@@ -12,9 +12,8 @@ class BearerTokenAuth(AuthStrategy):
     Config shape (``auth.config``):
         token: str  -- typically ``${SOME_ENV_VAR}``, substituted at config-load time.
 
-    Token refresh (OAuth2 client-credentials) is a separate, stretch strategy
-    per CLAUDE.md Section 3.2 — this one assumes a long-lived static token,
-    which is what a GitHub PAT is.
+    Token refresh (OAuth2 client-credentials) is a separate, stretch strategy —
+    this one assumes a long-lived static token, which is what a GitHub PAT is.
     """
 
     def __init__(self, config: dict[str, Any]):

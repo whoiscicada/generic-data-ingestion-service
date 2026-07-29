@@ -1,4 +1,4 @@
-"""Pydantic schema for the source-config DSL described in CLAUDE.md Section 3.1.
+"""Pydantic schema for the source-config DSL.
 
 A source is fully described by one of these documents. The engine (auth +
 pagination strategies, Fetcher, Sink) never branches on `source_id` — it only

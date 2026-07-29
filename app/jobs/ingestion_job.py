@@ -1,4 +1,4 @@
-"""IngestionJob: drives one end-to-end run (CLAUDE.md Section 3.6).
+"""IngestionJob: drives one end-to-end run.
 
 Creates a job_runs row, streams Fetcher -> Sink(s) page by page, and updates
 the row incrementally so a run's status is observable mid-flight via

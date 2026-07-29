@@ -1,5 +1,5 @@
 # Demo source #1: no auth, pagination via a full "next page" URL embedded
-# in the response body (info.next). See CLAUDE.md Section 6.
+# in the response body (info.next).
 source_id: rick_and_morty_characters
 base_url: https://rickandmortyapi.com/api
 endpoint:

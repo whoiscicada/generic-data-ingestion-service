@@ -1,4 +1,4 @@
-"""Async token-bucket rate limiter, one instance per source (CLAUDE.md 3.4/5).
+"""Async token-bucket rate limiter, one instance per source.
 
 Keeps the Fetcher within a source's configured requests_per_second/burst
 regardless of how many pages it ends up paginating through.

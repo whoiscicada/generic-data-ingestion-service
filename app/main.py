@@ -1,4 +1,4 @@
-"""FastAPI app factory + startup wiring (CLAUDE.md Section 3.7).
+"""FastAPI app factory + startup wiring.
 
 Contains no source-specific logic: startup configures logging, creates the
 Postgres schema if it doesn't exist yet, and loads every config under

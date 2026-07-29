@@ -1,5 +1,4 @@
-"""Interface-only S3 sink stub (CLAUDE.md Section 9: S3 sink defaults to
-interface-only pending Day 2 PM time check).
+"""Interface-only S3 sink stub.
 
 Its only purpose is to prove destination pluggability is real: it implements
 the same Sink ABC as DatabaseSink, and a source config can list it under
@@ -39,6 +38,6 @@ class S3Sink(Sink):
             },
         )
         raise NotImplementedError(
-            "S3Sink is an interface-only stub (see CLAUDE.md Section 9); "
-            "implement against a real S3/MinIO client to make it functional."
+            "S3Sink is an interface-only stub; implement against a real "
+            "S3/MinIO client to make it functional."
         )

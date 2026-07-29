@@ -1,6 +1,6 @@
 # Demo source #2: bearer-token auth, pagination via the RFC 5988 HTTP
 # Link header. Structurally different from demo source #1 in both auth
-# style and pagination mechanism (CLAUDE.md Section 6).
+# style and pagination mechanism.
 #
 # GITHUB_TOKEN is substituted from the environment at load time (see
 # .env.example) -- a plain scopeless personal access token is enough for

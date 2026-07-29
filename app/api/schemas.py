@@ -1,4 +1,4 @@
-"""Request/response Pydantic models for the API layer (CLAUDE.md Section 3.7)."""
+"""Request/response Pydantic models for the API layer."""
 
 from __future__ import annotations
 

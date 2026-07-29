@@ -1,7 +1,7 @@
 """Structured (JSON) logging setup.
 
 Cheap, dependency-light way to satisfy the "observability" concern
-(CLAUDE.md Section 5) without a full metrics/tracing stack: every fetch
+without a full metrics/tracing stack: every fetch
 attempt logs source_id, url, status, latency_ms, and attempt count as
 structured fields, so an evaluator can grep/jq the container logs to see
 exactly what happened during a run.

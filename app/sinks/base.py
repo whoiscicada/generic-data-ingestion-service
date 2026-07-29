@@ -1,4 +1,4 @@
-"""Sink interface (CLAUDE.md Section 3.5).
+"""Sink interface.
 
 The Fetcher/IngestionJob layer only ever calls ``write`` on whatever sinks a
 source's config lists under ``destination.sinks``; it never branches on

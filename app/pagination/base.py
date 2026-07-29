@@ -1,4 +1,4 @@
-"""PaginationStrategy interface (CLAUDE.md Section 3.3).
+"""PaginationStrategy interface.
 
 The Fetcher loop only ever calls these three methods; it has no idea whether
 it's driving a body-embedded next-URL, a Link header, or offset/limit

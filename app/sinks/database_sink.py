@@ -1,8 +1,8 @@
-"""Postgres sink: upsert idempotency via ON CONFLICT DO UPDATE (CLAUDE.md 3.5, D-1).
+"""Postgres sink: upsert idempotency via ON CONFLICT DO UPDATE.
 
 A record missing its configured id field is a schema-drift symptom, not a
 hard failure: it's logged as a warning and counted in WriteResult.failed,
-while the rest of the batch still gets written (CLAUDE.md Section 5).
+while the rest of the batch still gets written.
 """
 
 from __future__ import annotations

@@ -1,8 +1,8 @@
-"""SQLAlchemy 2.0 models — Postgres only (CLAUDE.md D-1: no SQLite fallback).
+"""SQLAlchemy 2.0 models — Postgres only, no SQLite fallback.
 
 ``raw_records`` stores the raw JSON payload alongside a handful of
 normalized columns so schema drift in a source's response shape doesn't
-cause hard failures (CLAUDE.md Section 5). Idempotency is enforced by a
+cause hard failures. Idempotency is enforced by a
 unique constraint on (source_id, record_id), upserted via Postgres
 ``INSERT ... ON CONFLICT DO UPDATE`` in app/sinks/database_sink.py.
 

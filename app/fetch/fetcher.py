@@ -1,4 +1,4 @@
-"""Fetcher: drives one source end-to-end (CLAUDE.md Section 3.4).
+"""Fetcher: drives one source end-to-end.
 
 Builds the initial request from SourceConfig, applies AuthStrategy on every
 attempt, executes via httpx.AsyncClient, rate-limits via a per-source token

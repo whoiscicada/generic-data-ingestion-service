@@ -1,4 +1,4 @@
-"""AuthStrategy interface (CLAUDE.md Section 3.2).
+"""AuthStrategy interface.
 
 Every concrete strategy takes a RequestSpec and returns a new one with
 whatever headers/params/tokens it needs injected. The Fetcher calls

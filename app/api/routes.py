@@ -1,4 +1,4 @@
-"""FastAPI routes (CLAUDE.md Section 3.7).
+"""FastAPI routes.
 
 Source configs live in ``request.app.state.sources`` (a dict keyed by
 source_id), seeded at startup from configs/sources/ and extendable at

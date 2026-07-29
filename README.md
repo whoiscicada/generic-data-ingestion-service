@@ -40,6 +40,19 @@ curl http://localhost:8000/runs        # recent runs
 
 Interactive API docs: `http://localhost:8000/docs`.
 
+### Using the hosted instance instead
+
+The same API is live at **https://generic-data-ingestion-service.onrender.com** — no setup needed, just swap the base URL:
+
+```bash
+curl https://generic-data-ingestion-service.onrender.com/healthz
+
+curl -X POST https://generic-data-ingestion-service.onrender.com/ingest/rick_and_morty_characters -d '{}'
+curl https://generic-data-ingestion-service.onrender.com/runs
+```
+
+It's on Render's free tier, which **spins the instance down after a period of inactivity**. The first request after a period of idleness will hang for something like 30-60 seconds while it cold-starts back up (a Render hosting-tier characteristic, not an application issue) — if a request seems to hang, that's why; it responds normally once it's warm, and stays warm as long as it keeps getting traffic. `docker compose up` (above) doesn't have this problem and remains the primary supported way to run and evaluate this.
+
 ### GitHub token
 
 The `github_issues` source uses `BearerTokenAuth`, so it needs a real personal access token in `.env`:
@@ -59,7 +72,7 @@ docker compose up -d db
 export DATABASE_URL=postgresql+asyncpg://ingestion:ingestion@localhost:5433/ingestion
 pip install -r requirements.txt
 pytest -q
-# 20 passed
+# 24 passed
 ```
 
 ## The public API(s) used
@@ -111,7 +124,7 @@ SourceConfig (YAML, Pydantic-validated)
 - **Partial-failure isolation is page-level, not record-level.** If a page exhausts its retries, the run stops paginating further (there's no way to know the next cursor without a successful response) but keeps whatever pages already landed and marks the run `partial_success`. This is "basic" depth per the brief, not a full dead-letter/replay subsystem.
 - **S3Sink is a stub, not a real integration.** It proves the `Sink` ABC is genuinely pluggable; it deliberately does not touch real S3/MinIO, per the time-box call in the brief.
 - **GitHub demo repo (`encode/httpx`) was swapped from the originally-proposed `microsoft/vscode`** because `state=all` on vscode is 100k+ issues — real pagination, but not a demo you'd want to sit through.
-- **The Render free-tier instance spins down after inactivity** and takes a short while to cold-start on the next request. This is a hosting-tier characteristic, not an application bug; `docker compose up` remains the primary, always-warm way to run and evaluate this.
+- **The Render free-tier instance spins down after inactivity** — see [Using the hosted instance instead](#using-the-hosted-instance-instead) for what that means in practice. `docker compose up` remains the primary, always-warm way to run and evaluate this.
 - **Config validation is fail-fast and unforgiving.** An invalid `SourceConfig` (missing required auth/pagination fields, bad backoff bounds, etc.) raises a clear Pydantic validation error at load time, not a confusing failure mid-run.
 
 ## What I would do with more time

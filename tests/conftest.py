@@ -1,6 +1,6 @@
 """Shared fixtures for DB-backed tests.
 
-Per CLAUDE.md D-1, there is no SQLite fallback: these fixtures talk to a
+There is no SQLite fallback: these fixtures talk to a
 real Postgres instance via DATABASE_URL (the same env var docker-compose
 sets for the app container). Run docker-compose's `db` service (or point
 DATABASE_URL at any reachable Postgres) before running tests in this file.

@@ -1,5 +1,5 @@
 """Async SQLAlchemy engine/session factory. Postgres only — DATABASE_URL is
-always supplied by docker-compose (CLAUDE.md D-1); there is no fallback."""
+always supplied by docker-compose; there is no fallback."""
 
 from __future__ import annotations
 

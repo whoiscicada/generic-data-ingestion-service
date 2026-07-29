@@ -1,5 +1,5 @@
-"""DatabaseSink tests against a real Postgres instance (CLAUDE.md D-1: no
-SQLite stand-in -- the upsert path under test must be the one that ships).
+"""DatabaseSink tests against a real Postgres instance (no SQLite
+stand-in -- the upsert path under test must be the one that ships).
 """
 
 from __future__ import annotations
