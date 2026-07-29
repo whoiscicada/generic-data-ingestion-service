@@ -6,7 +6,7 @@ A config-driven service that pulls data out of *any* external API and persists i
 
 ## How to run it
 
-The only supported way to run this project is `docker compose up` — there is no SQLite fallback and no "just run it with a local venv" path; Postgres is always supplied by compose, for local dev, tests, and the demo alike.
+There are two ways to use this: call the already-running [hosted instance](#using-the-hosted-instance-instead), or run it yourself. For running it yourself, the only supported path is `docker compose up` — there is no SQLite fallback and no "just run it with a local venv" path; Postgres is always supplied by compose, for local dev, tests, and the demo alike.
 
 ```bash
 git clone <this-repo>
